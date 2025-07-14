@@ -1,0 +1,11 @@
+fastapi[all]
+uvicorn
+transformers
+torch
+spacy
+nltk
+python-dotenv
+requests
+PyPDF2
+python-docx
+beautifulsoup4  # Add this new dependency
