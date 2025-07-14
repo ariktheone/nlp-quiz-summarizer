@@ -9,6 +9,7 @@
     <a href="#features">Features</a> •
     <a href="#quick-start">Quick Start</a> •
     <a href="#api-reference">API</a> •
+    <a href="#architecture">Architecture</a> •
     <a href="#contributing">Contributing</a>
   </p>
   
@@ -27,6 +28,19 @@
 ## 🚀 Overview
 
 **Smart Summary Quiz** is an AI-powered web app that transforms any text, document, or article into concise summaries and interactive quizzes. Upload files, paste text, or enter URLs—get instant summaries and test your knowledge with MCQs!
+
+---
+
+## ✨ Features
+
+- **Text, File, and URL Input:** Summarize and quiz any content.
+- **AI-Powered Summarization:** Uses HuggingFace Transformers for high-quality summaries.
+- **Quiz Generation:** Instantly generates MCQs from your content.
+- **Interactive Quiz:** Answer questions, get instant feedback, and see your score.
+- **History Tracking:** All your summaries and quiz attempts are saved for review.
+- **Responsive UI:** Beautiful, animated, and mobile-friendly interface.
+- **Accessibility:** Keyboard navigation and screen reader support.
+- **Open Source:** 100% free and open for contributions.
 
 ---
 
@@ -110,7 +124,7 @@ smart-summary-quiz/
 
 ---
 
-## 🛠️ Setup & Run
+## 🛠️ Quick Start
 
 ### Backend (FastAPI)
 ```bash
@@ -130,7 +144,7 @@ npm run dev
 
 ---
 
-## 🌐 API Endpoints
+## 🌐 API Reference
 
 ### Summarization
 - `POST /api/summarize`
@@ -160,6 +174,7 @@ npm run dev
 - **Responsive design:** Works on desktop and mobile
 - **Interactive quizzes:** Submit answers, see instant feedback and score
 - **History:** View all past summaries and quizzes, review your answers
+- **Accessibility:** Keyboard navigation and screen reader support
 
 ---
 
@@ -169,6 +184,16 @@ npm run dev
 - **Backend:** FastAPI, Transformers, NLTK, spaCy, PyPDF2, python-docx, BeautifulSoup
 - **Storage:** JSON file (can be upgraded to a database)
 - **APIs:** HuggingFace Transformers, Google Search API
+
+---
+
+## 📝 Example Usage
+
+1. **Paste text, upload a file, or enter a URL.**
+2. **Click "Generate Summary & Quiz".**
+3. **Review the summary and answer the quiz.**
+4. **Submit your answers and see your score.**
+5. **Visit the History page to review all your attempts and answers.**
 
 ---
 
@@ -190,9 +215,31 @@ This project is licensed under the MIT License. See [`LICENSE`](LICENSE) for det
 
 ## 👤 Author
 
-**Arijit Mondal**  
-[GitHub](https://github.com/arijitmondal)  
-Email: arijitmondal@example.com
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/117704271?v=4" width="120" alt="Arijit Mondal" style="border-radius:50%;box-shadow:0 4px 16px #209CEE33;">
+      <br />
+      <b style="font-size:1.2em;color:#209CEE;">Arijit Mondal</b>
+      <br />
+      <span style="color:#176bb3;">AI/ML Developer & Full Stack Engineer</span>
+    </td>
+  </tr>
+</table>
+
+- 💼 **GitHub:** [ariktheone](https://github.com/ariktheone)
+- 🌐 **Portfolio:** [arijitmondal-portfolio.vercel.app](https://arijitmondal-portfolio.vercel.app/)
+- 📧 **Email:** <arijitmondal200430@gmail.com>
+- 🔗 **LinkedIn:** [arijitmondal30](https://www.linkedin.com/in/arijitmondal30/)
+- 🏆 **Expertise:** AI/ML, Full Stack Development, Open Source, Hackathons
+- 🗣️ **Speaker:** AI/ML events, tech meetups, and workshops
+- 🤝 **Open to:** Collaborations, feedback, and new ideas!
+
+<div align="center">
+  <img src="https://img.shields.io/badge/AI%2FML-blue?style=for-the-badge" alt="AI/ML">
+  <img src="https://img.shields.io/badge/Full%20Stack-209CEE?style=for-the-badge" alt="Full Stack">
+  <img src="https://img.shields.io/badge/Open%20Source-green?style=for-the-badge" alt="Open Source">
+</div>
 
 ---
 
