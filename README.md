@@ -28,73 +28,48 @@
 
 **Smart Summary Quiz** is an AI-powered web app that transforms any text, document, or article into concise summaries and interactive quizzes. Upload files, paste text, or enter URLs—get instant summaries and test your knowledge with MCQs!
 
-## Features
-
-### Core Functionality
-- **📝 Multi-Input Support** - Process text, files, and URLs
-- **🤖 AI-Powered Summarization** - Advanced text summarization using HuggingFace Transformers
-- **❓ Intelligent Quiz Generation** - MCQ creation with T5 and Gemini models
-- **🔍 Answer Verification** - Google Search API integration for answer validation
-- **📊 History Tracking** - Complete activity history with scores and analytics
-- **🎨 Modern UI/UX** - Responsive design with smooth animations
-
-### Technical Features
-- RESTful API architecture
-- File upload support (multiple formats)
-- URL content extraction
-- Real-time processing
-- Mobile-responsive design
-- Accessible interface (WCAG compliant)
+---
 
 ## 🏗️ Architecture
 
+### 🟦 System Flow (Colorful Mermaid Table)
+
 ```mermaid
 flowchart TD
-    subgraph Frontend [Frontend (React + Vite)]
-        A1[MainPage.jsx]
-        A2[HistoryPage.jsx]
-        A3[ResultCard.jsx]
-        A4[MCQItem.jsx]
-        A5[api.js]
+    subgraph F[Frontend]
+        F1[MainPage.jsx]
+        F2[HistoryPage.jsx]
+        F3[ResultCard.jsx]
+        F4[MCQItem.jsx]
+        F5[api.js]
     end
-    subgraph Backend [Backend (FastAPI)]
+    subgraph B[Backend]
         B1[main.py]
         B2[summarizer.py]
         B3[mcq_generator.py]
         B4[history.py]
         B5[utils.py]
     end
-    subgraph Storage [Storage]
-        C1[history.json]
+    subgraph S[Storage]
+        S1[(history.json)]
     end
-    A5 <-->|REST API| B1
-    B1 --> B2
-    B1 --> B3
-    B1 --> B4
-    B4 --> C1
+
+    F1 -- User Input --> F5
+    F2 -- History Request --> F5
+    F5 -- Summarize/MCQ/History API --> B1
+    B1 -- Summarize --> B2
+    B1 -- MCQ Gen --> B3
+    B1 -- History --> B4
+    B4 -- Read/Write --> S1
+    F3 -- Show Results --> F1
+    F4 -- Show MCQs --> F1
+    F2 -- Show History --> F3
+    style F fill:#209CEE,stroke:#176bb3,stroke-width:2px
+    style B fill:#38B2AC,stroke:#005571,stroke-width:2px
+    style S fill:#FFD700,stroke:#FFA500,stroke-width:2px
 ```
 
-- **Frontend:** React + Vite + TailwindCSS, communicates with FastAPI via REST.
-- **Backend:** FastAPI serves summarization, MCQ generation, and history endpoints.
-- **Storage:** History is stored in a JSON file (`history.json`).
-
-## 🛠️ Setup & Run
-
-### Backend (FastAPI)
-```bash
-cd backend
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-uvicorn main:app --reload
-```
-
-### Frontend (React + Vite)
-```bash
-cd frontend
-npm install
-npm run dev
-```
+---
 
 ## 📁 Project Structure
 
@@ -133,6 +108,28 @@ smart-summary-quiz/
 └── LICENSE
 ```
 
+---
+
+## 🛠️ Setup & Run
+
+### Backend (FastAPI)
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
+
+### Frontend (React + Vite)
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+---
+
 ## 🌐 API Endpoints
 
 ### Summarization
@@ -154,6 +151,8 @@ smart-summary-quiz/
   - Request: `[userAnswers]`
   - Response: `{ success, score }`
 
+---
+
 ## 🎨 UI/UX Highlights
 
 - **Modern, animated 3D gradient backgrounds**
@@ -162,12 +161,16 @@ smart-summary-quiz/
 - **Interactive quizzes:** Submit answers, see instant feedback and score
 - **History:** View all past summaries and quizzes, review your answers
 
+---
+
 ## 🧰 Tech Stack
 
 - **Frontend:** React, Vite, TailwindCSS
 - **Backend:** FastAPI, Transformers, NLTK, spaCy, PyPDF2, python-docx, BeautifulSoup
 - **Storage:** JSON file (can be upgraded to a database)
 - **APIs:** HuggingFace Transformers, Google Search API
+
+---
 
 ## 🤝 Contributing
 
@@ -177,9 +180,13 @@ smart-summary-quiz/
 4. Push to the branch (`git push origin feature/your-feature`)
 5. Open a Pull Request
 
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License. See [`LICENSE`](LICENSE) for details.
+
+---
 
 ## 👤 Author
 
