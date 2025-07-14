@@ -1,63 +1,36 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import os
 from dotenv import load_dotenv
 from typing import List, Dict, Any
 
-# Load modules
 from summarizer import generate_summary
 from mcq_generator import generate_mcqs
-from utils import process_file, process_url
-
-load_dotenv()
+from history import router as history_router
 
 app = FastAPI()
-
-# CORS Setup
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # Adjust for production!
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-class TextRequest(BaseModel):
+app.include_router(history_router, prefix="/api/history")
+
+class SummarizeRequest(BaseModel):
     text: str
 
-class URLRequest(BaseModel):
-    url: str
+class MCQRequest(BaseModel):
+    text: str
 
-@app.post("/summarize")
-async def summarize(request: TextRequest):
-    return {"summary": generate_summary(request.text)}
+@app.post("/api/summarize")
+async def summarize_api(req: SummarizeRequest):
+    summary = generate_summary(req.text)
+    return {"summary": summary}
 
-@app.post("/mcqs")
-async def mcqs(request: TextRequest):
-    return {"mcqs": generate_mcqs(request.text)}
-
-@app.post("/process-file")
-async def process_file_route(file: UploadFile = File(...)):
-    try:
-        text = await process_file(file)
-        return {
-            "summary": generate_summary(text),
-            "mcqs": generate_mcqs(text)
-        }
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
-
-@app.post("/process-url")
-async def process_url_route(request: URLRequest):
-    try:
-        text = process_url(request.url)
-        return {
-            "summary": generate_summary(text),
-            "mcqs": generate_mcqs(text)
-        }
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+@app.post("/api/mcqs")
+async def mcqs_api(req: MCQRequest):
+    mcqs = generate_mcqs(req.text)
+    return {"mcqs": mcqs}

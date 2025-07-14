@@ -5,6 +5,7 @@ import {
   generateMCQs,
   processFile,
   processURL,
+  saveHistory,
 } from '../services/api';
 import InputTabs from '../components/InputTabs';
 import FileUpload from '../components/FileUpload';
@@ -71,9 +72,26 @@ const MainPage = () => {
         generateMCQs(processedText),
       ]);
 
-      setResults({
+      const generatedResults = {
         summary: summaryResult.summary,
         mcqs: mcqsResult.mcqs,
+      };
+
+      setResults(generatedResults);
+
+      // Save to history
+      await saveHistory({
+        summary: generatedResults.summary,
+        mcqs: generatedResults.mcqs,
+        createdAt: new Date().toISOString(),
+        type: activeTab, // 'text', 'file', or 'url'
+        input:
+          activeTab === 'text'
+            ? textInput
+            : activeTab === 'file'
+            ? fileInput?.name
+            : urlInput,
+        timestamp: new Date().toISOString(),
       });
 
       setUserAnswers(Array(mcqsResult.mcqs.length).fill(null));

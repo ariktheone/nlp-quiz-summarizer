@@ -17,15 +17,25 @@ const fileApi = axios.create({
   },
 });
 
-export const summarizeText = async (text) => {
-  const response = await api.post('/summarize', { text });
-  return response.data;
-};
+export async function summarizeText(text) {
+  const res = await fetch('/api/summarize', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text }),
+  });
+  if (!res.ok) throw new Error('Failed to summarize');
+  return await res.json();
+}
 
-export const generateMCQs = async (text) => {
-  const response = await api.post('/mcqs', { text });
-  return response.data;
-};
+export async function generateMCQs(text) {
+  const res = await fetch('/api/mcqs', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text }),
+  });
+  if (!res.ok) throw new Error('Failed to generate MCQs');
+  return await res.json();
+}
 
 export const processFile = async (file) => {
   const formData = new FormData();
@@ -40,12 +50,28 @@ export const processURL = async (url) => {
 };
 
 // For history feature (if implemented)
-export const saveToHistory = async (data) => {
-  const response = await api.post('/history', data);
-  return response.data;
-};
+export async function getHistory() {
+  const res = await fetch('/api/history/');
+  if (!res.ok) throw new Error('Failed to fetch history');
+  return await res.json();
+}
 
-export const getHistory = async () => {
-  const response = await api.get('/history');
-  return response.data;
-};
+export async function saveHistory(item) {
+  const res = await fetch('/api/history/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(item),
+  });
+  if (!res.ok) throw new Error('Failed to save history');
+  return await res.json();
+}
+
+export async function saveHistoryResponse(idx, answers) {
+  const res = await fetch(`/api/history/response/${idx}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(answers),
+  });
+  if (!res.ok) throw new Error('Failed to save response');
+  return await res.json();
+}
