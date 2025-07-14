@@ -17,6 +17,8 @@ const MainPage = () => {
   const [progress, setProgress] = useState(0);
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
+  const [userAnswers, setUserAnswers] = useState([]);
+  const [showResult, setShowResult] = useState(false);
   
   const textInputRef = useRef(null);
   
@@ -39,6 +41,8 @@ const MainPage = () => {
     
     setError('');
     setIsLoading(true);
+    setShowResult(false);
+    setUserAnswers([]);
     const progressInterval = simulateProgress();
     
     try {
@@ -73,6 +77,7 @@ const MainPage = () => {
         summary: summaryResult.summary,
         mcqs: mcqsResult.mcqs
       });
+      setUserAnswers(Array(mcqsResult.mcqs.length).fill(null));
       
     } catch (err) {
       setError(err.message || 'An error occurred while processing your request');
@@ -101,6 +106,22 @@ const MainPage = () => {
   const handleViewHistory = () => {
     navigate('/history');
   };
+  
+  const handleSelectAnswer = (mcqIdx, option) => {
+    setUserAnswers((prev) => {
+      const updated = [...prev];
+      updated[mcqIdx] = option;
+      return updated;
+    });
+  };
+  
+  const handleQuizSubmit = () => {
+    setShowResult(true);
+  };
+  
+  const correctCount = showResult && results?.mcqs
+    ? results.mcqs.filter((mcq, idx) => userAnswers[idx] === mcq.answer).length
+    : 0;
   
   return (
     <div className="max-w-4xl mx-auto px-4">
@@ -219,9 +240,34 @@ const MainPage = () => {
           <ResultCard title="Generated Quiz Questions">
             <div className="mt-4">
               {results.mcqs.length > 0 ? (
-                results.mcqs.map((mcq, index) => (
-                  <MCQItem key={index} mcq={mcq} index={index} />
-                ))
+                <>
+                  {showResult && (
+                    <div className="mb-4 text-green-700 font-semibold">
+                      You got {correctCount} out of {results.mcqs.length} correct.
+                    </div>
+                  )}
+                  {results.mcqs.map((mcq, index) => (
+                    <MCQItem
+                      key={index}
+                      mcq={mcq}
+                      index={index}
+                      userAnswer={userAnswers[index]}
+                      showResult={showResult}
+                      onSelectAnswer={(option) => handleSelectAnswer(index, option)}
+                    />
+                  ))}
+                  {!showResult && (
+                    <div className="flex justify-end mt-6">
+                      <button
+                        onClick={handleQuizSubmit}
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-6 rounded-lg transition-all duration-200"
+                        disabled={userAnswers.some((a) => a === null)}
+                      >
+                        Submit Quiz
+                      </button>
+                    </div>
+                  )}
+                </>
               ) : (
                 <div className="text-center py-8 text-gray-500">
                   No questions generated. The content might be too short or complex.
